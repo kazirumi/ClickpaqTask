@@ -1,0 +1,91 @@
+
+<div class="mx-auto" style="width: 80%;">
+    <h3>User List</h3>
+    <button class="btn btn-success mt-3 mb-3" (click)="onCreateContact(content)">+ Add Contact</button>
+    <table class="table table-hoover table-border table-striped">
+        <thead>
+            <tr>
+                
+                <th>Contact Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let contact of contactService.ContactList">
+            
+                <td>{{contact.Name}}</td>
+                <td>{{contact.Email}}</td>
+                <td>{{contact.PhoneNumber}}</td>
+
+
+                <td>
+                    <!-- <button class="btn btn-info ml-2" (click)="editCompany(company)">EDIT</button> -->
+                    <button class="btn btn-primary ml-2  mt-1" (click)="onEditContact(content,contact)">
+                        Edit
+                    </button>
+                    <button class="btn btn-danger ml-2  mt-1" (click)="deleteContact(contact.Id)">Delete</button>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+
+<!-- //User Edit Modal -->
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">User Edit</h4>
+	</div>
+	<div class="modal-body">
+		<form [formGroup]="contactService.contactModel" autocomplete="off" (submit)="onSubmit(content)">
+            <!-- {{service.userModel.value|json}} -->
+            <input type="hidden" formControlName="Id">
+                        <div class="form-group required">
+                            <label>Contact Name</label>
+                            <input type="text" class="form-control" formControlName="Name">
+                            <label class="text-danger" *ngIf="f.Name.touched && f.Name?.errors?.required">Name is Mandatory.</label>
+                        </div>
+                        
+                        <div class="form-group required">
+                            <label>Email</label>
+                            <input type="email" class="form-control" formControlName="Email">
+                            <label class="text-danger" *ngIf="!f.Email.valid">Invalid Email Address.</label>
+                            <!-- <label class="text-danger" *ngIf="f.Email?.errors?.required"> Email is Mandatory.</label> -->
+
+
+                       
+                        </div>
+                        <!-- {{f.Email.errors|json}} -->
+                        <div class="form-group">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" formControlName="PhoneNumber">
+                            <label class="text-danger" *ngIf="f.PhoneNumber.touched && f.PhoneNumber?.errors?.required">Phone number is must.</label>
+                            <label class="text-danger" *ngIf="f.PhoneNumber.touched && f.PhoneNumber?.errors?.minlength">Minimum 10 Digit.</label>
+                            <label class="text-danger" *ngIf="f.PhoneNumber.touched && f.PhoneNumber?.errors?.maxlength">Maximum 10 Digit.</label>
+                            <label class="text-danger" *ngIf="f.PhoneNumber.touched && f.PhoneNumber?.errors?.pattern">Must be valid phone number</label>
+
+
+                        </div>
+                        
+                        <!-- {{f.PhoneNumber?.errors|json}} -->
+                        <div class="form-row">
+                            <div class="form-group col-md-8 offset-md-2">
+                                <button type="submit" class="submit btn btn-lg btn-block btn-success" [disabled]="!contactService.contactModel.valid ">Submit</button>
+                            </div>
+                        </div>
+                        
+                        
+                </form>
+	</div>
+	<div class="modal-footer">
+		<button type="button" class="btn btn-secondary" (click)="modal.close('Close click')">Close</button>
+	</div>
+</ng-template>
+
+
+
+
+

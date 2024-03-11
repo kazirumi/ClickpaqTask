@@ -1,0 +1,51 @@
+
+        <form [formGroup]="service.userModel" autocomplete="off" (submit)="onSubmit()">
+<!-- {{service.userModel.value|json}} -->
+            <div class="form-group required">
+                <label>User Name</label>
+                <input type="text" class="form-control" formControlName="UserName">
+                <label class="text-danger" *ngIf="f.UserName.touched && f.UserName?.errors?.required">User Name is Mandatory.</label>
+                <!-- <label class="text-danger" *ngIf="f.UserName.touched && f.UserName?.errors?.noSpaceAllowed">User Name cannot contain white spaces.</label> -->
+
+            </div>
+            
+            <div class="form-group required">
+                <label>Email</label>
+                <input type="email" class="form-control" formControlName="Email">
+                <label class="text-danger" *ngIf="!f.Email.valid">Invalid Email Address.</label>
+                <!-- <label class="text-danger" *ngIf="f.Email?.touched && f.Email?.errors['required']">Email is required</label>
+                <label class="text-danger" *ngIf="f.Email?.touched && f.Email?.errors.['email']">Email is invalid</label> -->
+            </div>
+
+            <!-- {{f.UserName?.errors|json}} -->
+            
+            <div formGroupName="Passwords">
+                <div class="form-group required">
+                    <label>Password</label>
+                    <input type="password" class="form-control" formControlName="Password">
+                    <label class="text-danger" *ngIf="f.Passwords.controls.Password.touched && f.Passwords.controls.Password?.errors?.required">Password is must.</label>
+                    <label class="text-danger" *ngIf="f.Passwords.controls.Password.touched && f.Passwords.controls.Password?.errors?.minlength">Minimum 4 Characters.</label>
+            
+                </div>
+                <!-- {{f.Passwords.controls.Password.errors|json}} -->
+                <div class="form-group required">
+                    <label>Confirm Password</label>
+                    <input type="password" class="form-control" name="Confirm" #Confirm (keyup)="CheckPassword(Confirm.value)" formControlName="ConfirmPassword">
+                    <label class="text-danger" *ngIf="f.Passwords.controls.ConfirmPassword.touched && f.Passwords?.controls?.ConfirmPassword?.errors?.required">Confirm Password is must.</label>
+                    <label class="text-success" *ngIf="f.Passwords.controls.ConfirmPassword.touched && Check">Confirm Password  matched.</label>
+                    <label class="text-danger" *ngIf="f.Passwords.controls.ConfirmPassword.dirty && !Check">Confirm Password did not match.</label>
+
+                    
+            
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group col-md-8 offset-md-2">
+                    <button type="submit" class="submit btn btn-lg btn-block btn-success" [disabled]="!service.userModel.valid || !Check">Submit</button>
+                </div>
+            </div>
+            
+            
+    </form>
+    
