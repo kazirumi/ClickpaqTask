@@ -13,6 +13,7 @@ import { Contact } from '../shared/contact.model';
   templateUrl: './contact-list.component.html',
   styles: []
 })
+
 export class ContactListComponent implements OnInit {
 
   constructor(public contactService:ContactService,public toastr:ToastrService) { }
